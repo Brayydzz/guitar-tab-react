@@ -1,10 +1,16 @@
 import React, {useEffect, useReducer} from 'react';
 import Home from './components/Home';
+import Nav from './components/Nav';
+import NewTrack from './components/NewTrack';
 import trackReducer, { trackContext } from './trackReducer';
+import {BrowserRouter, Route, Switch} from "react-router-dom"
 
 function App() {
 
-  
+  // Assigns [storeTrack, trackDispatch] to the use reducer function. Pulls in the trackReducer function.
+  // 2nd argument is an object containing the default values of tracks
+  //storeTracks is the global state that we can pass down to components that are wrapped within trackContext.Provider
+
   const [storeTracks, trackDispatch ] = useReducer(trackReducer, { 
     tracks: [] }) 
 
@@ -20,9 +26,16 @@ function App() {
 
   return (
     <>
-      <trackContext.Provider value={{...storeTracks, trackDispatch}}>
-        <Home />
-      </trackContext.Provider>
+      <h1>GUITAR TAB LIBRARY</h1>
+      <BrowserRouter>
+        <trackContext.Provider value={{...storeTracks, trackDispatch}}>
+          <Nav />
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/track/new/" component={NewTrack}/>
+          </Switch>
+        </trackContext.Provider>
+      </BrowserRouter>
     </>
   );
 }
