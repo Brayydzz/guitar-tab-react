@@ -10,6 +10,18 @@ export default function trackReducer ( trackState, action ) {
                 tracks: action.tracks
             }
         }
+        case "getTunings": {
+            return {
+                ...trackState,
+                tunings: action.tunings
+            }
+        }
+        case "addTrack": {
+            return {
+                ...trackState,
+                tracks: [...trackState, action.newTrack]
+            }
+        }
 
         default: return trackState
 

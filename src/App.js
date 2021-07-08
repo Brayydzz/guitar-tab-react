@@ -12,7 +12,8 @@ function App() {
   //storeTracks is the global state that we can pass down to components that are wrapped within trackContext.Provider
 
   const [storeTracks, trackDispatch ] = useReducer(trackReducer, { 
-    tracks: [] }) 
+    tracks: [],
+    tunings: [] }) 
 
   useEffect( async () => {
     const res = await fetch("http://localhost:4000/api/v1/tracks")
@@ -21,7 +22,16 @@ function App() {
       type: "getTracks",
       tracks: data
     })
-  }, [])
+  },[])
+
+  useEffect( async () => {
+    const res = await fetch("http://localhost:4000/api/v1/tunings")
+    const data = await res.json()
+    trackDispatch({
+      type: "getTunings",
+      tunings: data
+    }) 
+  },[])
 
 
   return (
